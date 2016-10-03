@@ -6,6 +6,10 @@ import org.neo4j.driver.v1._
 
 case class User(id: Int, name: String, salary: Int, age: Int)
 
+/**
+ * Created by anurag on 16/9/16.
+ */
+
 class CustomReceiver(nodeName: String) extends Receiver[User](StorageLevel.MEMORY_AND_DISK_2) with Neo4jConstant {
 
   override def onStart(): Unit = {
@@ -26,7 +30,7 @@ class CustomReceiver(nodeName: String) extends Receiver[User](StorageLevel.MEMOR
     try {
       val driver = GraphDatabase.driver(bolt_url, AuthTokens.basic(user_name, password))
       val session = driver.session
-      val script = "MATCH (u:EMPINFO) RETURN u.id AS id, u.name AS name, u.age AS age, u.salary AS salary"
+      val script = s"MATCH (u:$node_name) RETURN u.id AS id, u.name AS name, u.age AS age, u.salary AS salary"
       val result: StatementResult = session.run(script)
       while (result.hasNext()) {
         val record = result.next()
