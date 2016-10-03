@@ -6,12 +6,11 @@ Neo4j database must have been installed on your system and the password can be s
 
 After installing Neo4j run script which is placed in the resources from the Neo4j console.
 
+    Cypher: 
+    
+    LOAD CSV WITH HEADERS FROM 'file://$SRC_PATH/src/main/resources/employee.csv' AS row 
+    CREATE (t:Details {id: row.id, name:row.name, age: row.age, address:row.address, salary: row.salary}) return t;
 
-----
-LOAD CSV WITH HEADERS FROM 'file://$SRC_PATH/src/main/resources/employee.csv' AS row 
-CREATE (t:Details {id: row.id, name:row.name, age: row.age, address:row.address, salary: row.salary}) return t;
+    $SRC_PATH => Where you keep the project.
+    Ex. => /home/anurag/spark_assignment_3
 
-$SRC_PATH => Where you keep the project.
-Ex. => /home/anurag/spark_assignment_3
-
-----
